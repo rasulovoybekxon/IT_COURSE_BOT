@@ -1,5 +1,6 @@
 package uz.pdp;
 
+import uz.pdp.models.BotService;
 import uz.pdp.models.Course;
 import uz.pdp.models.Lesson;
 import uz.pdp.models.User;
@@ -17,5 +18,8 @@ public class Main {
         Lesson lesson = Lesson.builder().name("Hello my branch").level("Beginner").number_course(10).build();
 
         System.out.println(lesson);
+
+        BotService botService = new BotService("Bot");
+        System.out.println(botService);
     }
 }
