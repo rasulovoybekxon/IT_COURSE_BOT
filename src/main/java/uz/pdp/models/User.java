@@ -1,9 +1,25 @@
 package uz.pdp.models;
 
-public class User {
-    private int age;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import uz.pdp.enums.State;
 
-    public User(int age) {
-        this.age = age;
-    }
+import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class User {
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String phoneNumber;
+    private String chatId;
+    private State state;
+
+
 }
