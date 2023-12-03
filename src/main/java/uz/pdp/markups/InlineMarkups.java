@@ -1,21 +1,18 @@
 package uz.pdp.markups;
 
 import lombok.SneakyThrows;
-import org.glassfish.jersey.internal.guava.Iterators;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import uz.pdp.models.Constants;
-import uz.pdp.utils.ConnectUtils;
+import uz.pdp.utils.Utils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class InlineMarkups {
-    private Connection connection = ConnectUtils.getConnection();
+    private Connection connection = Utils.getConnection();
 
     @SneakyThrows
     public InlineKeyboardMarkup availableCourses(String category) {
@@ -39,5 +36,16 @@ public class InlineMarkups {
             row = new ArrayList<>();
         }
         return InlineKeyboardMarkup.builder().keyboard(rows).build();
+    }
+
+    public InlineKeyboardMarkup models() {
+
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+
+        InlineKeyboardButton button = new InlineKeyboardButton("1-lesson. Programming computer hardware and software");
+
+        button.setCallbackData("1-lesson. Programming computer hardware and software");
+
     }
 }
