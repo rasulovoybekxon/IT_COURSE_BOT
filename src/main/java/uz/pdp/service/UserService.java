@@ -3,6 +3,7 @@ package uz.pdp.service;
 import lombok.SneakyThrows;
 import uz.pdp.enums.State;
 import uz.pdp.models.User;
+import uz.pdp.utils.ConnectUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,10 +11,10 @@ import java.sql.Statement;
 import java.util.UUID;
 
 public class UserService {
-    private static Connection connection =Utils.getConnection();
+    private static Connection connection = ConnectUtils.getConnection();
 
     @SneakyThrows
-    public String addUser(User user){
+    public String addUser(User user) {
         Statement statement = connection.createStatement();
         String query = "select * from add_user('%s','%s','%s','%s','%s','%s')";
         ResultSet resultSet = statement.executeQuery(
@@ -25,10 +26,10 @@ public class UserService {
     }
 
     @SneakyThrows
-    public User findByChatId(String chatId){
+    public User findByChatId(String chatId) {
         Statement statement = connection.createStatement();
         String query = "select * from find_by_chat_id('%s')";
-        ResultSet resultSet = statement.executeQuery(String.format(query,chatId));
+        ResultSet resultSet = statement.executeQuery(String.format(query, chatId));
 
         if (resultSet.next()) {
             User user = User.builder()
