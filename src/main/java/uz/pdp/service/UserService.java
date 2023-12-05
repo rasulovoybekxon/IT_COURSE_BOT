@@ -3,6 +3,8 @@ package uz.pdp.service;
 import lombok.SneakyThrows;
 import uz.pdp.enums.State;
 import uz.pdp.models.User;
+import uz.pdp.utils.Utils;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,14 +12,14 @@ import java.sql.Statement;
 import java.util.UUID;
 
 public class UserService {
-    private static Connection connection =Utils.getConnection();
+    private static Connection connection = Utils.getConnection();
 
     @SneakyThrows
-    public String addUser(User user){
+    public String addUser(User user) {
         Statement statement = connection.createStatement();
         String query = "select * from add_user('%s','%s','%s','%s','%s','%s')";
         ResultSet resultSet = statement.executeQuery(
-                String.format(query, user.getFirstName(), user.getLastName(), user.getUserName(), user.getPhoneNumber(), user.getChatId(), user, user.getState())
+                String.format(query, user.getFirstName(), user.getLastName(), user.getUserName(), user.getPhoneNumber(), user.getChatId(), user.getState())
         );
 
         resultSet.next();
@@ -25,10 +27,10 @@ public class UserService {
     }
 
     @SneakyThrows
-    public User findByChatId(String chatId){
+    public User findByChatId(String chatId) {
         Statement statement = connection.createStatement();
         String query = "select * from find_by_chat_id('%s')";
-        ResultSet resultSet = statement.executeQuery(String.format(query,chatId));
+        ResultSet resultSet = statement.executeQuery(String.format(query, chatId));
 
         if (resultSet.next()) {
             User user = User.builder()
@@ -44,6 +46,15 @@ public class UserService {
         }
 
         return null;
+    }
+
+    @SneakyThrows
+    public State updateState(String newState, String chatId){
+        Statement statement = connection.createStatement();
+        String query = "update users set user_state = '%s' where chat_id = '%s' ";
+        boolean execute = statement.execute(String.format(query, newState,chatId));
+
+        return State.valueOf(newState);
     }
 
 }
