@@ -2,6 +2,7 @@ package uz.pdp.service;
 
 import lombok.SneakyThrows;
 import uz.pdp.enums.State;
+import uz.pdp.models.Course;
 import uz.pdp.models.User;
 import uz.pdp.utils.Utils;
 
@@ -9,6 +10,7 @@ import uz.pdp.utils.Utils;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserService {
@@ -55,6 +57,32 @@ public class UserService {
         boolean execute = statement.execute(String.format(query, newState,chatId));
 
         return State.valueOf(newState);
+    }
+
+
+    @SneakyThrows
+    public ArrayList<Course> getUserCourses(String chatId) {
+        Statement statement = connection.createStatement();
+        String query = "select * from get_course('%s')";
+        ResultSet resultSet = statement.executeQuery(
+                String.format(query,chatId)
+        );
+        ArrayList<Course> courses = new ArrayList<>();
+        while (resultSet.next()) {
+            Course course = new Course();
+            course.setCourseName(resultSet.getString("course_name"));
+            course.setCompleted_course(resultSet.getBoolean("completed_course"));
+            course.setId(resultSet.getObject("id", UUID.class));
+            course.setNumberOfUsers(resultSet.getLong("number_of_users"));
+            course.setCategory(resultSet.getString("category"));
+            course.setDescription(resultSet.getString("description"));
+            course.setLevel(resultSet.getInt("level"));
+
+            courses.add(course);
+        }
+
+        resultSet.next();
+        return courses;
     }
 
 }
