@@ -8,4 +8,9 @@ public final class Constants {
     public static final String BACKEND = "Backend";
     public static final String FRONTEND = "Frontend";
     public static final String MOBILE = "Mobile";
+    public static final String BACK = "Back";
+    public static final String JAVA_BACKEND = "JavaBackend";
+    public static final String PYTHON = "PYTHON";
+    public static final String C_PLUS_PLUS = "C++";
+    public static final String START_COURSE = "Start course";
 }

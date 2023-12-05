@@ -59,10 +59,13 @@ public class MarkUps {
 
         row = new KeyboardRow();
         row.add(Constants.FRONTEND);
+
+
+        row.add(Constants.MOBILE);
         rows.add(row);
 
         row = new KeyboardRow();
-        row.add(Constants.MOBILE);
+        row.add(Constants.BACK);
         rows.add(row);
 
         return ReplyKeyboardMarkup.builder().resizeKeyboard(true).keyboard(rows).build();
@@ -78,6 +81,7 @@ public class MarkUps {
         rows.add(row);
 
         return ReplyKeyboardMarkup.builder().resizeKeyboard(true).keyboard(rows).build();
+
     }
 
 }
