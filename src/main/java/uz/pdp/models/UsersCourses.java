@@ -9,11 +9,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+public class UsersCourses {
+    private UUID userId;
+    private UUID courseId;
+    private boolean completedCourse;
 
-public class Course {
-    private UUID id;
-    private String courseName;
-    private String category;
-    private String description;
-    private long numberUsers;
 }

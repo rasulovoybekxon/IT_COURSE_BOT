@@ -1,10 +1,14 @@
 package uz.pdp.markups;
 
 import lombok.SneakyThrows;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import uz.pdp.enums.constants.Constants;
+import uz.pdp.models.Course;
+import uz.pdp.service.UserService;
 import uz.pdp.utils.Utils;
 
 import java.sql.Connection;
@@ -14,6 +18,7 @@ import java.util.List;
 
 public class MarkUps {
     private static Connection connection = Utils.getConnection();
+    static UserService userService = new UserService();
 
     public static ReplyKeyboardMarkup contactButton() {
         KeyboardRow row = new KeyboardRow();
@@ -46,7 +51,6 @@ public class MarkUps {
                 .keyboard(rows)
                 .build();
     }
-
     @SneakyThrows
     public static ReplyKeyboardMarkup showCategories() {
 
@@ -69,19 +73,6 @@ public class MarkUps {
         rows.add(row);
 
         return ReplyKeyboardMarkup.builder().resizeKeyboard(true).keyboard(rows).build();
-    }
-
-    public static ReplyKeyboardMarkup startCourse() {
-
-        ArrayList<KeyboardRow> rows = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
-
-        row.add("Start course");
-        row.add("Back");
-        rows.add(row);
-
-        return ReplyKeyboardMarkup.builder().resizeKeyboard(true).keyboard(rows).build();
-
     }
 
 }

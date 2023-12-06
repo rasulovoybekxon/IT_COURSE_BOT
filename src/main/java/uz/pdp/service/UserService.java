@@ -2,23 +2,34 @@ package uz.pdp.service;
 
 import lombok.SneakyThrows;
 import uz.pdp.enums.State;
+import uz.pdp.models.Course;
 import uz.pdp.models.User;
-import uz.pdp.utils.ConnectUtils;
+import uz.pdp.utils.Utils;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserService {
-    private static Connection connection = ConnectUtils.getConnection();
+    private static Connection connection = Utils.getConnection();
+    public static UserService userService;
+
+    public static UserService getInstance() {
+        if (userService == null) {
+            userService = new UserService();
+        }
+        return userService;
+    }
 
     @SneakyThrows
     public String addUser(User user) {
         Statement statement = connection.createStatement();
         String query = "select * from add_user('%s','%s','%s','%s','%s','%s')";
         ResultSet resultSet = statement.executeQuery(
-                String.format(query, user.getFirstName(), user.getLastName(), user.getUserName(), user.getPhoneNumber(), user.getChatId(), user, user.getState())
+                String.format(query, user.getFirstName(), user.getLastName(), user.getUserName(), user.getPhoneNumber(), user.getChatId(), user.getState())
         );
 
         resultSet.next();
@@ -45,6 +56,15 @@ public class UserService {
         }
 
         return null;
+    }
+
+    @SneakyThrows
+    public State updateState(String newState, String chatId) {
+        Statement statement = connection.createStatement();
+        String query = "update users set user_state = '%s' where chat_id = '%s' ";
+        boolean execute = statement.execute(String.format(query, newState, chatId));
+
+        return State.valueOf(newState);
     }
 
 }
